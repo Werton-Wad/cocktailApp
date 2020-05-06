@@ -1,12 +1,13 @@
 import React from 'react';
 
+import CocktailApp from './components/cocktailApp/CocktailApp';
 
 
 function App() {
   return (
-    <div>
-        App
-    </div>
+    <>
+        <CocktailApp />
+    </>
   );
 }
 
