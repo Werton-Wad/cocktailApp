@@ -3,18 +3,21 @@ import { connect } from 'react-redux';
 
 import { fetchCocktails } from '../../redux/actions';
 import './cocktailApp.css';
-
+import DrinksList from './List';
 class CocktailApp extends React.Component {
 
-    // state = {
-    //     activeLetter: '',
-    // }
+    state = {
+        isLoad: false,
+    }
 
     handleClick = (e) => {
-       const activeLetter = e.target.textContent;
-      const ka =  this.props.fetchCocktails(activeLetter);
-      console.log(ka);
-      
+        const activeLetter = e.target.textContent;
+       this.props.fetchCocktails(activeLetter);
+        this.setState(
+            {  
+                isLoad: true,
+            }
+        );
     }
 
     render() {
@@ -58,7 +61,13 @@ class CocktailApp extends React.Component {
                     <p>Нажмите на кнопку чтобы выбрать коктейл!</p>
                     {buttons}
                 </div>
-
+                {this.state.isLoad ?
+                <DrinksList drinks={this.props.cocktails}/>
+            :
+            ''}
+                
+           
+                
             </div>
         );
     }
@@ -74,4 +83,4 @@ const mapStateToProps = (state) => {
 
   const actions = { fetchCocktails };
 
-  export default connect(null, actions)(CocktailApp);
+  export default connect(mapStateToProps , actions)(CocktailApp);

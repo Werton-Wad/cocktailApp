@@ -11,7 +11,7 @@ export const fetchCocktails = (letter) => {
   return async (dispatch) => {
     try {
       const { data: cocktails } = await axios(`${config.apiCoctailSearch}${letter}`)
-      dispatch({ type: actions.fetchAll, payload: cocktails });
+      dispatch({ type: actions.fetchAll, payload: cocktails.drinks});
     } catch (error) {
       console.log(error);
     }
