@@ -25,9 +25,21 @@
 
 }
 .wrapper__image {
-    width: 200px;
+    width: 400px;
+    
 }
-.drink-image {
+.drink__image {
+    float: left;
     width: 100%;
     height: auto;
+    padding-right: 10px;
+    border-radius: 50%;
+}
+.drinks__wrapper li {
+    cursor: pointer;
+}
+.main__content {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
 }

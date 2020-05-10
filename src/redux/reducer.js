@@ -3,6 +3,7 @@ import { actions } from './actions';
 const initialState = {
   list: [],
   isListLoaded: false,
+  item: {},
 }
 
 export const cocktailReducer = (state = initialState, action) => {
@@ -14,6 +15,12 @@ export const cocktailReducer = (state = initialState, action) => {
         list: action.payload,
         isListLoaded: true,
       };
+
+      case actions.fetchOne:
+        return {
+          ...state,
+          item: action.payload,
+        };
 
     default:
       return state;

@@ -2,16 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-import { fetchCocktails } from '../../redux/actions';
+import { fetchCocktails, fetchCocktail } from '../../redux/actions';
 import './cocktailApp.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DrinksList from './List';
 import LiveSeacrh from './LiveSearch';
+import DrinkItem from './Item';
 class CocktailApp extends React.Component {
 
     state = {
         isLoad: false,
         search: '',
+        isLoadItem: false,
     }
 
     handleClick = (e) => {
@@ -25,7 +27,6 @@ class CocktailApp extends React.Component {
     }
 
     handleChange = (e) => {
-    //   const finedCocktail = this.props.cocktails.find(el => el.strDrink.toLowerCase().includes(e.target.value));
         this.setState({ search: e.target.value});
     }
 
@@ -36,10 +37,16 @@ class CocktailApp extends React.Component {
         }
         return copyDrinks;
     }
-    
+    handleClickCocktail = (e) => {
+        this.props.fetchCocktail(e.target.getAttribute('data'));
+        // console.log(e.target.textContent);
+        this.setState({ isLoadItem: true });
+        
+    }
 
     render() {
-        console.log(this.state.search);
+        console.log(this.props.item);
+        
         const currentDrinks = this.getDrinks();
         const alphabet = [
             'A',
@@ -84,7 +91,12 @@ class CocktailApp extends React.Component {
                 {this.state.isLoad ?
                 <>
                 <LiveSeacrh handleChange={this.handleChange}/>
-                <DrinksList drinks={currentDrinks}/>
+                <div className="main__content">
+                  <DrinksList drinks={currentDrinks} handleClickCocktail={this.handleClickCocktail}/>
+                  {this.state.isLoadItem && <DrinkItem drink={this.props.cocktail}/>} 
+                   
+                </div>
+                
                 </>
             :
             ''}
@@ -101,9 +113,10 @@ const mapStateToProps = (state) => {
     return {
       cocktails: state.cocktail.list,
       isLoaded: state.cocktail.isListLoaded,
+      cocktail: state.cocktail.item,
     };
   }
 
-  const actions = { fetchCocktails };
+  const actions = { fetchCocktails, fetchCocktail };
 
   export default connect(mapStateToProps , actions)(CocktailApp);

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const DrinksList = ( { drinks }) => {
-    
+const DrinksList = ( props ) => {
+    const { drinks, handleClickCocktail } = props;
     const drinksList = drinks.map(el => (
-        <li key={el.idDrink} style={{paddingBottom: '5px'}}>
+        <li key={el.idDrink} data={el.idDrink} onClick={(e) => handleClickCocktail(e)} style={{paddingBottom: '5px'}}>
             {el.idDrink} |
             {el.strDrink}
         </li>
