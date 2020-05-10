@@ -3,7 +3,7 @@ import React from 'react';
 const DrinksList = ( { drinks }) => {
     
     const drinksList = drinks.map(el => (
-        <li key={el.idDrink}>
+        <li key={el.idDrink} style={{paddingBottom: '5px'}}>
             {el.idDrink} |
             {el.strDrink}
         </li>

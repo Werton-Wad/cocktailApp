@@ -1,26 +1,46 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+
 import { fetchCocktails } from '../../redux/actions';
 import './cocktailApp.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import DrinksList from './List';
+import LiveSeacrh from './LiveSearch';
 class CocktailApp extends React.Component {
 
     state = {
         isLoad: false,
+        search: '',
     }
 
     handleClick = (e) => {
         const activeLetter = e.target.textContent;
-       this.props.fetchCocktails(activeLetter);
+        this.props.fetchCocktails(activeLetter);
         this.setState(
-            {  
+            {   
                 isLoad: true,
             }
         );
     }
 
+    handleChange = (e) => {
+    //   const finedCocktail = this.props.cocktails.find(el => el.strDrink.toLowerCase().includes(e.target.value));
+        this.setState({ search: e.target.value});
+    }
+
+    getDrinks = () => {
+        let copyDrinks = [...this.props.cocktails];
+        if (this.state.search !== '') {
+            copyDrinks = copyDrinks.filter(item => item.strDrink.toLowerCase().includes(this.state.search.toLowerCase()));
+        }
+        return copyDrinks;
+    }
+    
+
     render() {
+        console.log(this.state.search);
+        const currentDrinks = this.getDrinks();
         const alphabet = [
             'A',
             'B',
@@ -62,7 +82,10 @@ class CocktailApp extends React.Component {
                     {buttons}
                 </div>
                 {this.state.isLoad ?
-                <DrinksList drinks={this.props.cocktails}/>
+                <>
+                <LiveSeacrh handleChange={this.handleChange}/>
+                <DrinksList drinks={currentDrinks}/>
+                </>
             :
             ''}
                 
